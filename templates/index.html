@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare - Your Mental Health Companion</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-light: rgba(255, 255, 255, 0.9);
+            --shadow-light: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --shadow-heavy: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s infinite linear;
+        }
+
+        .bg-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .bg-shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .bg-shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+
+        .bg-shape:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            right: 30%;
+            animation-delay: 15s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: slideInDown 1s ease-out;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .logo i {
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s infinite;
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+        }
+
+        /* Main Card */
+        .main-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: var(--shadow-light);
+            animation: slideInUp 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--secondary-gradient);
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: var(--primary-gradient);
+            margin-left: 15px;
+        }
+
+        .section-title i {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Radio Groups */
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            flex: 1;
+            min-width: 120px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+
+        .radio-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .radio-item:hover::before {
+            left: 0;
+        }
+
+        .radio-item input[type="radio"] {
+            margin: 0;
+            z-index: 2;
+            position: relative;
+        }
+
+        .radio-item label {
+            z-index: 2;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .radio-item:has(input[type="radio"]:checked) {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .radio-item:has(input[type="radio"]:checked)::before {
+            left: 0;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(102, 126, 234, 0.1);
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Results Section */
+        .result-section {
+            margin-top: 40px;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+            animation: slideInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 0;
+        }
+
+        .result-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-positive {
+            background: var(--success-gradient);
+            color: white;
+        }
+
+        .result-negative {
+            background: var(--warning-gradient);
+            color: white;
+        }
+
+        .result-uncertain {
+            background: var(--danger-gradient);
+            color: white;
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 25px;
+            animation: bounce 1s ease-out;
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .confidence-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .recommendations {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .recommendations h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .recommendations ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .recommendations li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .recommendations li i {
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-card {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 3rem;
+            }
+
+            .radio-group {
+                flex-direction: column;
+            }
+
+            .radio-item {
+                min-width: auto;
+            }
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--secondary-gradient);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-gradient);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-animation">
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                MindCare
+            </div>
+            <div class="tagline">Your Mental Health Matters</div>
+            <div class="subtitle">Take the first step towards better mental wellness</div>
+        </div>
+
+        <div class="main-card">
+            <form id="mentalHealthForm">
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-user"></i>
+                        Personal Information
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="gender_female" name="gender" value="Female" required>
+                                    <label for="gender_female">Female</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="gender_male" name="gender" value="Male" required>
+                                    <label for="gender_male">Male</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Country</label>
+                            <select class="form-select" name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="United States">United States</option>
+                                <option value="Canada">Canada</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Germany">Germany</option>
+                                <option value="France">France</option>
+                                <option value="India">India</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Occupation</label>
+                            <select class="form-select" name="occupation" required>
+                                <option value="">Select Occupation</option>
+                                <option value="Corporate">Corporate</option>
+                                <option value="Healthcare">Healthcare</option>
+                                <option value="Education">Education</option>
+                                <option value="Technology">Technology</option>
+                                <option value="Student">Student</option>
+                                <option value="Unemployed">Unemployed</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Are you self-employed?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="self_employed_yes" name="self_employed" value="Yes"
+                                        required>
+                                    <label for="self_employed_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="self_employed_no" name="self_employed" value="No" required>
+                                    <label for="self_employed_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-heart"></i>
+                        Health & Family History
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Family History of Mental Health Issues</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="family_history_yes" name="family_history" value="Yes"
+                                        required>
+                                    <label for="family_history_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="family_history_no" name="family_history" value="No"
+                                        required>
+                                    <label for="family_history_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Previous Mental Health Treatment</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="treatment_yes" name="treatment" value="Yes" required>
+                                    <label for="treatment_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="treatment_no" name="treatment" value="No" required>
+                                    <label for="treatment_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Personal Mental Health History</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="mental_health_history_yes" name="mental_health_history"
+                                        value="Yes" required>
+                                    <label for="mental_health_history_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="mental_health_history_no" name="mental_health_history"
+                                        value="No" required>
+                                    <label for="mental_health_history_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-home"></i>
+                        Lifestyle & Behavior
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Days Spent Indoors Recently</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="days_indoors_1_14" name="days_indoors" value="1-14 days"
+                                        required>
+                                    <label for="days_indoors_1_14">1-14 days</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="days_indoors_15_30" name="days_indoors" value="15-30 days"
+                                        required>
+                                    <label for="days_indoors_15_30">15-30 days</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="days_indoors_31_60" name="days_indoors" value="31-60 days"
+                                        required>
+                                    <label for="days_indoors_31_60">31-60 days</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="days_indoors_2_months" name="days_indoors"
+                                        value="More than 2 months" required>
+                                    <label for="days_indoors_2_months">More than 2 months</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="days_indoors_daily" name="days_indoors"
+                                        value="Go out Every day" required>
+                                    <label for="days_indoors_daily">Go out Every day</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Growing Stress Levels</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="growing_stress_yes" name="growing_stress" value="Yes"
+                                        required>
+                                    <label for="growing_stress_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="growing_stress_no" name="growing_stress" value="No"
+                                        required>
+                                    <label for="growing_stress_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Changes in Habits</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="changes_habits_yes" name="changes_habits" value="Yes"
+                                        required>
+                                    <label for="changes_habits_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="changes_habits_no" name="changes_habits" value="No"
+                                        required>
+                                    <label for="changes_habits_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-brain"></i>
+                        Mental Health Indicators
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Mood Swings Intensity</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="mood_swings_low" name="mood_swings" value="Low" required>
+                                    <label for="mood_swings_low">Low</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="mood_swings_medium" name="mood_swings" value="Medium"
+                                        required>
+                                    <label for="mood_swings_medium">Medium</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="mood_swings_high" name="mood_swings" value="High" required>
+                                    <label for="mood_swings_high">High</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Struggling with Coping</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="coping_struggles_yes" name="coping_struggles" value="Yes"
+                                        required>
+                                    <label for="coping_struggles_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="coping_struggles_no" name="coping_struggles" value="No"
+                                        required>
+                                    <label for="coping_struggles_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Work Interest Level</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="work_interest_yes" name="work_interest" value="Yes"
+                                        required>
+                                    <label for="work_interest_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="work_interest_no" name="work_interest" value="No" required>
+                                    <label for="work_interest_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Social Weakness</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="social_weakness_yes" name="social_weakness" value="Yes"
+                                        required>
+                                    <label for="social_weakness_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="social_weakness_no" name="social_weakness" value="No"
+                                        required>
+                                    <label for="social_weakness_no">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Mental Health Interview Comfort</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="mental_health_interview_yes" name="mental_health_interview"
+                                        value="Yes" required>
+                                    <label for="mental_health_interview_yes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="mental_health_interview_no" name="mental_health_interview"
+                                        value="No" required>
+                                    <label for="mental_health_interview_no">No</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="mental_health_interview_maybe"
+                                        name="mental_health_interview" value="Maybe" required>
+                                    <label for="mental_health_interview_maybe">Maybe</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-heart"></i> Get My Mental Health Assessment
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div class="loading-text">Analyzing your responses...</div>
+            </div>
+
+            <div class="result-section" id="result">
+                <div class="result-content">
+                    <div class="result-icon" id="resultIcon"></div>
+                    <div class="result-title" id="resultTitle"></div>
+                    <div class="confidence-badge" id="confidenceBadge"></div>
+                    <div class="result-description" id="resultDescription"></div>
+                    <div class="recommendations" id="recommendations"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Progress tracking
+        function updateProgress() {
+            const form = document.getElementById('mentalHealthForm');
+            const inputs = form.querySelectorAll('input[required], select[required]');
+            const filled = Array.from(inputs).filter(input => {
+                if (input.type === 'radio') {
+                    return input.checked;
+                }
+                return input.value !== '';
+            });
+            const progress = (filled.length / inputs.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Add event listeners for progress tracking
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('mentalHealthForm');
+            const inputs = form.querySelectorAll('input, select');
+
+            inputs.forEach(input => {
+                input.addEventListener('change', updateProgress);
+            });
+        });
+
+        // Form submission
+        document.getElementById('mentalHealthForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                displayResult(result.prediction, result.confidence, result.recommendations);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        });
+
+        function displayResult(prediction, confidence, recommendations) {
+            const resultDiv = document.getElementById('result');
+            const iconDiv = document.getElementById('resultIcon');
+            const titleDiv = document.getElementById('resultTitle');
+            const descDiv = document.getElementById('resultDescription');
+            const recDiv = document.getElementById('recommendations');
+            const confDiv = document.getElementById('confidenceBadge');
+
+            resultDiv.style.display = 'block';
+
+            if (prediction === 'Yes') {
+                resultDiv.className = 'result-section result-positive';
+                iconDiv.innerHTML = '<i class="fas fa-heart"></i>';
+                titleDiv.textContent = 'Consider Professional Support';
+                descDiv.textContent = 'Based on your responses, it may be beneficial to seek professional mental health support. Remember, asking for help is a sign of strength, not weakness.';
+            } else if (prediction === 'Not sure') {
+                resultDiv.className = 'result-section result-uncertain';
+                iconDiv.innerHTML = '<i class="fas fa-question-circle"></i>';
+                titleDiv.textContent = 'Monitor Your Well-being';
+                descDiv.textContent = 'Your responses suggest some areas to pay attention to. Consider monitoring your mental health and reaching out if you notice any concerning changes.';
+            } else {
+                resultDiv.className = 'result-section result-negative';
+                iconDiv.innerHTML = '<i class="fas fa-smile"></i>';
+                titleDiv.textContent = 'You\'re Doing Well!';
+                descDiv.textContent = 'Your responses indicate good mental health awareness and coping strategies. Continue maintaining your well-being and supporting others around you.';
+            }
+
+            confDiv.textContent = `Confidence: ${(confidence * 100).toFixed(1)}%`;
+
+            recDiv.innerHTML = `
+                <h3><i class="fas fa-lightbulb"></i> Recommended Actions</h3>
+                <ul>
+                    ${recommendations.map(rec => `<li><i class="fas fa-check"></i> ${rec}</li>`).join('')}
+                </ul>
+            `;
+
+            // Scroll to result
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
